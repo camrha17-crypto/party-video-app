@@ -337,6 +337,30 @@ function removeRemoteVideoBox(participant) {
   }
 }
 
+function getRemoteParticipants(roomInstance) {
+  if (roomInstance.remoteParticipants instanceof Map) {
+    return Array.from(roomInstance.remoteParticipants.values());
+  }
+
+  if (roomInstance.participants instanceof Map) {
+    return Array.from(roomInstance.participants.values());
+  }
+
+  return [];
+}
+
+function getParticipantTrackPublications(participant) {
+  if (participant.trackPublications instanceof Map) {
+    return Array.from(participant.trackPublications.values());
+  }
+
+  if (participant.tracks instanceof Map) {
+    return Array.from(participant.tracks.values());
+  }
+
+  return [];
+}
+
 async function publishLocalTracks(roomInstance) {
   const stream = await startCamera();
   const publishTasks = stream.getTracks().map((track) => {
@@ -429,8 +453,8 @@ async function joinLiveKitRoom(roomName, roomMode = "match") {
   await room.connect(data.livekitUrl, data.token);
   await publishLocalTracks(room);
 
-  room.participants.forEach((participant) => {
-    participant.tracks.forEach((publication) => {
+  getRemoteParticipants(room).forEach((participant) => {
+    getParticipantTrackPublications(participant).forEach((publication) => {
       const track = publication.track;
       if (!track) return;
 
