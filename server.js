@@ -7,10 +7,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(express.static("public"));
 app.use(express.json());
+app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.send("PartyLink server is running 🚀");
+});
 
 function getLiveKitConfig() {
   const livekitUrl = process.env.LIVEKIT_URL;
@@ -314,6 +318,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
