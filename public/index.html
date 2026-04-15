@@ -3,32 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Party Video Live</title>
+  <title>PartyLink</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      color-scheme: dark;
-      --bg-top: #090a10;
-      --bg-bottom: #04050a;
-      --panel: rgba(15, 18, 28, 0.88);
-      --panel-soft: rgba(19, 22, 34, 0.78);
-      --surface: rgba(255, 255, 255, 0.04);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f8f9fb;
-      --text-soft: rgba(242, 244, 248, 0.78);
-      --text-muted: rgba(201, 205, 214, 0.56);
-      --blue: #4f8cff;
-      --pink: #ff2d75;
-      --pink-soft: #ff6b9d;
-      --cyan: #1fd8ff;
-      --green: #22c55e;
-      --yellow: #fbbf24;
-      --red: #ff5d5d;
-      --shadow-xl: 0 36px 90px rgba(0, 0, 0, 0.5);
-      --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.34);
-      --radius-xl: 32px;
+      color-scheme: light;
+      --bg: #f6f4ff;
+      --bg-accent: #efe9ff;
+      --panel: rgba(255, 255, 255, 0.86);
+      --panel-strong: rgba(255, 255, 255, 0.96);
+      --surface: #ffffff;
+      --surface-soft: #f5f1ff;
+      --surface-tint: #fff4eb;
+      --border: rgba(121, 92, 255, 0.12);
+      --border-strong: rgba(121, 92, 255, 0.18);
+      --text: #221b49;
+      --text-soft: #5f5a7b;
+      --text-muted: #8b86a8;
+      --blue: #6f7cff;
+      --purple: #8f63ff;
+      --lavender: #b59cff;
+      --peach: #ffbf9a;
+      --peach-strong: #ff9466;
+      --mint: #7dddb8;
+      --yellow: #ffe45e;
+      --red: #ff7d6b;
+      --shadow-xl: 0 30px 80px rgba(111, 124, 255, 0.16);
+      --shadow-lg: 0 18px 48px rgba(92, 78, 166, 0.14);
+      --shadow-sm: 0 8px 18px rgba(92, 78, 166, 0.08);
+      --radius-xl: 34px;
       --radius-lg: 24px;
       --radius-md: 18px;
       --radius-sm: 14px;
@@ -50,10 +55,10 @@
       font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 14% 16%, rgba(255, 45, 117, 0.28), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(31, 216, 255, 0.18), transparent 22%),
-        radial-gradient(circle at 58% 100%, rgba(79, 140, 255, 0.16), transparent 34%),
-        linear-gradient(180deg, var(--bg-top) 0%, #090b13 38%, var(--bg-bottom) 100%);
+        radial-gradient(circle at 10% 12%, rgba(255, 205, 168, 0.75), transparent 22%),
+        radial-gradient(circle at 86% 8%, rgba(181, 156, 255, 0.55), transparent 24%),
+        radial-gradient(circle at 52% 96%, rgba(125, 221, 184, 0.34), transparent 28%),
+        linear-gradient(180deg, #faf7ff 0%, #f2edff 48%, #f7f8ff 100%);
     }
 
     body::before,
@@ -67,17 +72,17 @@
 
     body::before {
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-      background-size: 120px 120px;
-      opacity: 0.32;
+        linear-gradient(rgba(143, 99, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(143, 99, 255, 0.04) 1px, transparent 1px);
+      background-size: 96px 96px;
+      opacity: 0.45;
     }
 
     body::after {
       background:
-        radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 48%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 35%);
-      opacity: 0.6;
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.6), transparent 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 40%);
+      opacity: 0.7;
     }
 
     button,
@@ -94,12 +99,12 @@
       position: relative;
       z-index: 1;
       height: 100svh;
-      width: min(1360px, calc(100vw - 28px));
+      width: min(1320px, calc(100vw - 28px));
       margin: 0 auto;
-      padding: 18px 0;
+      padding: 20px 0 18px;
       display: grid;
       grid-template-rows: auto 1fr;
-      gap: 16px;
+      gap: 18px;
     }
 
     .status-dock {
@@ -114,32 +119,32 @@
       align-items: center;
       gap: 16px;
       padding: 16px 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(180deg, rgba(13, 15, 23, 0.95), rgba(18, 21, 31, 0.86));
-      backdrop-filter: blur(22px);
+      border-radius: 24px;
+      border: 1px solid rgba(143, 99, 255, 0.14);
+      background: rgba(255, 255, 255, 0.74);
+      backdrop-filter: blur(18px);
       box-shadow: var(--shadow-lg);
       transition: border-color 180ms ease, box-shadow 180ms ease;
     }
 
     .status-card[data-tone="info"] {
-      border-color: rgba(31, 216, 255, 0.22);
-      box-shadow: 0 18px 40px rgba(31, 216, 255, 0.08);
+      border-color: rgba(111, 124, 255, 0.24);
+      box-shadow: 0 18px 40px rgba(111, 124, 255, 0.12);
     }
 
     .status-card[data-tone="success"] {
-      border-color: rgba(34, 197, 94, 0.22);
-      box-shadow: 0 18px 40px rgba(34, 197, 94, 0.08);
+      border-color: rgba(125, 221, 184, 0.34);
+      box-shadow: 0 18px 40px rgba(125, 221, 184, 0.14);
     }
 
     .status-card[data-tone="warning"] {
-      border-color: rgba(251, 191, 36, 0.24);
-      box-shadow: 0 18px 40px rgba(251, 191, 36, 0.08);
+      border-color: rgba(255, 191, 154, 0.42);
+      box-shadow: 0 18px 40px rgba(255, 191, 154, 0.16);
     }
 
     .status-card[data-tone="danger"] {
-      border-color: rgba(255, 93, 93, 0.24);
-      box-shadow: 0 18px 40px rgba(255, 93, 93, 0.08);
+      border-color: rgba(255, 125, 107, 0.32);
+      box-shadow: 0 18px 40px rgba(255, 125, 107, 0.12);
     }
 
     .status-icon {
@@ -148,7 +153,7 @@
       height: 44px;
       border-radius: 16px;
       flex: 0 0 auto;
-      background: rgba(255, 255, 255, 0.06);
+      background: linear-gradient(135deg, rgba(143, 99, 255, 0.18), rgba(255, 191, 154, 0.3));
     }
 
     .status-icon::before {
@@ -156,7 +161,7 @@
       position: absolute;
       inset: 12px;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.42));
+      background: linear-gradient(135deg, var(--purple), var(--peach-strong));
     }
 
     .status-copy {
@@ -202,9 +207,9 @@
     .screen-card {
       height: 100%;
       border-radius: var(--radius-xl);
-      border: 1px solid var(--border);
-      background: linear-gradient(160deg, rgba(16, 18, 28, 0.96), rgba(9, 10, 16, 0.9));
-      backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.74);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.68));
+      backdrop-filter: blur(22px);
       box-shadow: var(--shadow-xl);
       overflow: hidden;
     }
@@ -233,7 +238,7 @@
     .meta-card,
     .stage-panel {
       border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(18, 21, 32, 0.96), rgba(12, 14, 22, 0.94));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(250, 247, 255, 0.9));
       box-shadow: var(--shadow-lg);
     }
 
@@ -249,13 +254,13 @@
     .brand-block {
       display: grid;
       grid-template-rows: auto 1fr auto;
-      gap: 18px;
-      padding: 22px;
+      gap: 22px;
+      padding: 26px;
       overflow: hidden;
       background:
-        radial-gradient(circle at 0% 0%, rgba(255, 45, 117, 0.16), transparent 28%),
-        radial-gradient(circle at 100% 0%, rgba(31, 216, 255, 0.14), transparent 26%),
-        linear-gradient(160deg, rgba(16, 18, 28, 0.98), rgba(10, 11, 17, 0.96));
+        radial-gradient(circle at 10% 0%, rgba(255, 205, 168, 0.95), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(181, 156, 255, 0.62), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, #f6f2ff 100%);
     }
 
     .brand-top {
@@ -273,23 +278,24 @@
     }
 
     .brand-mark {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
       display: grid;
       place-items: center;
-      background: linear-gradient(145deg, rgba(255, 45, 117, 1), rgba(79, 140, 255, 0.9));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 20px 35px rgba(255, 45, 117, 0.22);
+      background: linear-gradient(145deg, #8f63ff, #ffb486);
+      box-shadow: 0 18px 34px rgba(143, 99, 255, 0.22);
       font-size: 20px;
       font-weight: 800;
       letter-spacing: 0.08em;
+      color: white;
     }
 
     .brand-kicker,
     .section-kicker,
     .mini-kicker {
       margin: 0 0 8px;
-      color: rgba(255, 117, 170, 0.9);
+      color: #8c6cf0;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       font-size: 11px;
@@ -310,9 +316,9 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-soft);
+      border: 1px solid rgba(125, 221, 184, 0.42);
+      background: rgba(255, 255, 255, 0.64);
+      color: var(--text);
       font-size: 13px;
       font-weight: 700;
     }
@@ -322,14 +328,14 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 14px rgba(34, 197, 94, 0.6);
+      background: #30c58d;
+      box-shadow: 0 0 12px rgba(48, 197, 141, 0.45);
     }
 
     .hero-copy h1 {
       margin: 0;
       font-size: clamp(38px, 5vw, 64px);
-      line-height: 0.96;
+      line-height: 0.98;
       letter-spacing: -0.06em;
       max-width: 720px;
     }
@@ -353,11 +359,12 @@
     .top-chip {
       padding: 11px 14px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(143, 99, 255, 0.12);
+      background: rgba(255, 255, 255, 0.72);
       color: var(--text-soft);
       font-size: 12px;
       font-weight: 700;
+      box-shadow: var(--shadow-sm);
     }
 
     .footer-chip {
@@ -387,8 +394,8 @@
 
     .premium-panel {
       background:
-        linear-gradient(180deg, rgba(255, 45, 117, 0.16), rgba(14, 16, 24, 0.94) 48%),
-        linear-gradient(140deg, rgba(255, 107, 157, 0.12), rgba(79, 140, 255, 0.08));
+        radial-gradient(circle at top right, rgba(255, 191, 154, 0.6), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 242, 0.92));
     }
 
     .premium-badge,
@@ -396,13 +403,13 @@
       display: inline-flex;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #ffd5e5;
+      background: rgba(143, 99, 255, 0.1);
+      color: #7a58e6;
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(143, 99, 255, 0.12);
     }
 
     .section-title {
@@ -461,15 +468,15 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink-soft), var(--cyan));
+      background: linear-gradient(135deg, var(--purple), var(--peach-strong));
     }
 
     .premium-note {
       margin-top: 14px;
       padding: 12px 14px;
       border-radius: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(143, 99, 255, 0.1);
       font-size: 12px;
     }
 
@@ -498,20 +505,21 @@
       min-height: 56px;
       padding: 0 18px;
       border-radius: 18px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(143, 99, 255, 0.12);
+      background: rgba(255, 255, 255, 0.92);
       color: var(--text);
       outline: none;
       transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
     }
 
     .field-input::placeholder {
-      color: rgba(201, 205, 214, 0.44);
+      color: #aaa4c4;
     }
 
     .field-input:focus {
-      border-color: rgba(79, 140, 255, 0.42);
-      box-shadow: 0 0 0 5px rgba(79, 140, 255, 0.12);
+      border-color: rgba(111, 124, 255, 0.4);
+      box-shadow: 0 0 0 5px rgba(111, 124, 255, 0.12);
       transform: translateY(-1px);
     }
 
@@ -531,10 +539,10 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      color: white;
+      color: #2a2154;
       font-weight: 800;
       letter-spacing: -0.02em;
-      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 14px 24px rgba(111, 124, 255, 0.16);
       transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease, opacity 180ms ease;
     }
 
@@ -550,28 +558,28 @@
     }
 
     .app-button--blue {
-      background: linear-gradient(135deg, #5b8fff, #3f68ff);
+      background: linear-gradient(135deg, #e7e2ff, #d6ccff);
     }
 
     .app-button--violet {
-      background: linear-gradient(135deg, #9a65ff, #6a42ff);
+      background: linear-gradient(135deg, #c9b7ff, #b299ff);
+      color: white;
     }
 
     .app-button--green {
-      background: linear-gradient(135deg, #22c55e, #12a047);
+      background: linear-gradient(135deg, #bbefd7, #90dfbc);
     }
 
     .app-button--yellow {
-      background: linear-gradient(135deg, #ffd562, #f7b733);
-      color: #14151d;
+      background: linear-gradient(135deg, #ffe7ba, #ffd08f);
     }
 
     .app-button--red {
-      background: linear-gradient(135deg, #ff7676, #ff4f4f);
+      background: linear-gradient(135deg, #ffc1b8, #ff9f91);
     }
 
     .app-button--premium {
-      background: linear-gradient(135deg, #ff2d75, #ff7aa5);
+      background: linear-gradient(135deg, #ffd7bf, #ffbb9e);
     }
 
     .lobby-top {
@@ -647,8 +655,8 @@
     .party-summary {
       padding: 18px;
       border-radius: 20px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(18, 21, 32, 0.96), rgba(12, 14, 22, 0.94));
+      border: 1px solid rgba(143, 99, 255, 0.12);
+      background: rgba(255, 255, 255, 0.92);
       box-shadow: var(--shadow-lg);
       font-size: 13px;
     }
@@ -660,9 +668,9 @@
       grid-template-rows: auto 1fr;
       gap: 14px;
       background:
-        radial-gradient(circle at 100% 0%, rgba(255, 45, 117, 0.14), transparent 22%),
-        radial-gradient(circle at 0% 100%, rgba(31, 216, 255, 0.12), transparent 24%),
-        linear-gradient(180deg, rgba(17, 20, 30, 0.98), rgba(9, 11, 17, 0.96));
+        radial-gradient(circle at 100% 0%, rgba(255, 191, 154, 0.5), transparent 24%),
+        radial-gradient(circle at 0% 100%, rgba(181, 156, 255, 0.28), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 245, 255, 0.96));
     }
 
     .stage-head {
@@ -683,8 +691,8 @@
     .stage-pill {
       padding: 12px 16px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(143, 99, 255, 0.12);
+      background: rgba(255, 255, 255, 0.72);
       color: var(--text-soft);
       font-size: 13px;
       font-weight: 700;
@@ -693,7 +701,7 @@
     #videoGrid {
       min-height: 0;
       display: grid;
-      gap: 14px;
+      gap: 16px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: stretch;
     }
@@ -716,15 +724,15 @@
       position: relative;
       overflow: hidden;
       min-height: 0;
-      border-radius: 26px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(15, 17, 26, 0.98), rgba(8, 10, 16, 0.98));
-      box-shadow: 0 24px 44px rgba(0, 0, 0, 0.28);
+      border-radius: 28px;
+      border: 1px solid rgba(143, 99, 255, 0.12);
+      background: #1e1837;
+      box-shadow: 0 18px 36px rgba(76, 54, 140, 0.18);
       animation: fadeUp 280ms ease;
     }
 
     .video-card--local {
-      border-color: rgba(79, 140, 255, 0.22);
+      border-color: rgba(125, 221, 184, 0.42);
     }
 
     .video-frame {
@@ -733,8 +741,8 @@
       min-height: 100%;
       aspect-ratio: 16 / 10;
       background:
-        radial-gradient(circle at 50% 0%, rgba(255, 45, 117, 0.14), transparent 40%),
-        linear-gradient(180deg, rgba(17, 20, 29, 0.98), rgba(6, 8, 14, 0.98));
+        radial-gradient(circle at 50% 0%, rgba(255, 191, 154, 0.26), transparent 40%),
+        linear-gradient(180deg, rgba(35, 28, 60, 0.98), rgba(17, 14, 31, 0.98));
     }
 
     .video-card video {
@@ -753,7 +761,7 @@
       justify-content: space-between;
       gap: 12px;
       padding: 16px;
-      background: linear-gradient(180deg, transparent 0%, rgba(2, 4, 8, 0.88) 100%);
+      background: linear-gradient(180deg, transparent 0%, rgba(18, 12, 36, 0.9) 100%);
       pointer-events: none;
     }
 
@@ -768,8 +776,8 @@
       margin-bottom: 10px;
       padding: 7px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.14);
       color: white;
       font-size: 11px;
       font-weight: 800;
@@ -786,13 +794,13 @@
     }
 
     .identity-pill--self {
-      background: rgba(79, 140, 255, 0.2);
-      border-color: rgba(79, 140, 255, 0.3);
-      color: #dbeafe;
+      background: rgba(125, 221, 184, 0.18);
+      border-color: rgba(125, 221, 184, 0.28);
+      color: #d7fff0;
     }
 
     .identity-pill--self::before {
-      background: #60a5fa;
+      background: #7dddb8;
     }
 
     .video-title {
@@ -816,7 +824,7 @@
       padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.32);
+      background: rgba(255, 255, 255, 0.14);
       color: rgba(255, 255, 255, 0.88);
       font-size: 12px;
       font-weight: 800;
@@ -832,8 +840,8 @@
       padding: 28px;
       color: rgba(255, 255, 255, 0.82);
       background:
-        radial-gradient(circle at 50% 25%, rgba(255, 45, 117, 0.18), transparent 28%),
-        linear-gradient(180deg, rgba(11, 13, 20, 0.98), rgba(6, 8, 13, 0.94));
+        radial-gradient(circle at 50% 25%, rgba(255, 191, 154, 0.24), transparent 28%),
+        linear-gradient(180deg, rgba(38, 30, 65, 0.98), rgba(18, 14, 32, 0.94));
       transition: opacity 220ms ease, visibility 220ms ease;
     }
 
@@ -849,8 +857,8 @@
       border-radius: 24px;
       display: grid;
       place-items: center;
-      background: linear-gradient(145deg, rgba(255, 45, 117, 0.22), rgba(79, 140, 255, 0.18));
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(145deg, rgba(255, 191, 154, 0.26), rgba(181, 156, 255, 0.22));
+      border: 1px solid rgba(255, 255, 255, 0.12);
       font-size: 26px;
       font-weight: 800;
       letter-spacing: 0.08em;
@@ -871,8 +879,8 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(1, 2, 6, 0.7);
-      backdrop-filter: blur(16px);
+      background: rgba(90, 74, 156, 0.18);
+      backdrop-filter: blur(18px);
       opacity: 0;
       visibility: hidden;
       transition: opacity 180ms ease, visibility 180ms ease;
@@ -886,8 +894,8 @@
     .modal-card {
       width: min(920px, 100%);
       border-radius: 32px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(19, 22, 33, 0.98), rgba(9, 11, 17, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(250, 246, 255, 0.96));
       box-shadow: var(--shadow-xl);
       overflow: hidden;
       transform: translateY(16px) scale(0.98);
@@ -914,8 +922,8 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background: rgba(255, 255, 255, 0.06);
-      color: white;
+      background: rgba(143, 99, 255, 0.08);
+      color: var(--text);
       font-size: 20px;
       line-height: 1;
     }
@@ -930,13 +938,13 @@
     .pricing-card {
       padding: 20px;
       border-radius: 24px;
-      border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(143, 99, 255, 0.12);
+      background: rgba(255, 255, 255, 0.86);
     }
 
     .pricing-card--featured {
-      background: linear-gradient(180deg, rgba(255, 45, 117, 0.12), rgba(255, 255, 255, 0.04));
-      border-color: rgba(255, 45, 117, 0.18);
+      background: linear-gradient(180deg, rgba(255, 191, 154, 0.24), rgba(255, 255, 255, 0.9));
+      border-color: rgba(255, 191, 154, 0.4);
     }
 
     .pricing-name {
@@ -1078,8 +1086,8 @@
       <div id="statusCard" class="status-card" data-tone="neutral">
         <div class="status-icon" aria-hidden="true"></div>
         <div class="status-copy">
-          <p class="status-label">Session Status</p>
-          <p id="status" aria-live="polite">Create or join a party first</p>
+          <p class="status-label">Live Status</p>
+          <p id="status" aria-live="polite">Create a party or join with a code</p>
         </div>
       </div>
     </div>
@@ -1092,35 +1100,35 @@
               <div class="brand-cluster">
                 <div class="brand-mark">PV</div>
                 <div>
-                  <p class="brand-kicker">Live Party Chat</p>
-                  <p class="brand-name">Party Video</p>
+                  <p class="brand-kicker">Party Video Chat</p>
+                  <p class="brand-name">PartyLink</p>
                 </div>
               </div>
 
-              <div class="live-pill">Realtime matching is online</div>
+              <div class="live-pill">Live matching is on</div>
             </div>
 
             <div class="hero-copy">
               <p class="section-kicker">Start Here</p>
-              <h1>Create your party, then jump into a separate live lobby.</h1>
+              <h1>Meet with your group first, then match with another party.</h1>
               <p class="subtitle">
-                This screen is just for joining, creating, and upgrading. Once you connect to a party, the app moves you into a dedicated party lobby where your crew can talk before matchmaking starts.
+                The layout is simple on purpose: add your name, create a party or join one, and keep your crew together while you wait for the next match.
               </p>
             </div>
 
             <div class="metric-row">
-              <span class="metric-pill">Premium upsell built in</span>
-              <span class="metric-pill">Party-first live lobby</span>
-              <span class="metric-pill">No scrolling between flows</span>
+              <span class="metric-pill">Up to 4 people per party</span>
+              <span class="metric-pill">Party vs party matching</span>
+              <span class="metric-pill">Bright video-first layout</span>
             </div>
           </section>
 
           <aside class="onboarding-side">
             <section class="control-panel">
               <p class="section-kicker">Join Or Create</p>
-              <h2 class="section-title">Connect to your party</h2>
+              <h2 class="section-title">Get your party ready</h2>
               <p class="section-copy">
-                Create a new party for your crew or join with a code. Once connected, you will be taken into your dedicated party lobby.
+                Start a new group for your friends or join an existing code. As soon as you connect, your camera preview and party lobby open automatically.
               </p>
 
               <div class="field-grid">
@@ -1141,16 +1149,16 @@
               </div>
 
               <div class="button-row">
-                <button id="premiumCtaBtn" class="app-button app-button--premium" type="button">See upgrade plans</button>
+                <button id="premiumCtaBtn" class="app-button app-button--premium" type="button">See Party Pro</button>
               </div>
             </section>
 
             <section class="premium-panel">
               <div class="premium-badge">Party Pro</div>
-              <p class="mini-kicker">Upgrade Surface</p>
-              <h2 class="section-title">Unlock bigger parties and premium rooms</h2>
+              <p class="mini-kicker">Optional Upgrade</p>
+              <h2 class="section-title">Keep the free flow simple, then offer more when groups need it</h2>
               <p class="section-copy">
-                Put the conversion pitch next to the join flow so bigger groups immediately see the premium path.
+                The free experience stays clean. Party Pro is still here if you want to preview a bigger paid plan for larger groups later.
               </p>
 
               <div class="premium-price">
@@ -1159,17 +1167,17 @@
               </div>
 
               <ul class="premium-list">
-                <li>Pitch up to 8-person parties</li>
-                <li>Priority matching and host badges</li>
-                <li>Premium room styling and identity surfaces</li>
+                <li>Preview larger party messaging</li>
+                <li>Show premium host and room styling</li>
+                <li>Keep the current live backend limit at 4</li>
               </ul>
 
               <button id="openPremiumBtn" class="app-button app-button--premium" type="button" style="margin-top: 18px;">
-                Upgrade for bigger parties
+                Open Party Pro
               </button>
 
               <div id="premiumNote" class="premium-note">
-                Premium is presented as a launch-ready frontend upsell. The current live backend limit in this build still remains 4 members per party.
+                Party Pro is a frontend preview right now. The active live backend limit still stays at 4 members per party.
               </div>
             </section>
           </aside>
@@ -1181,16 +1189,16 @@
           <section class="lobby-top">
             <div>
               <p class="section-kicker">Party Lobby</p>
-              <h1 class="lobby-title">Your crew stays here between matches.</h1>
+              <h1 class="lobby-title">Your group stays together between matches.</h1>
               <p class="lobby-subtitle">
-                Talk to your party, wait together, then jump into matched rooms without leaving this dedicated lobby experience.
+                Use this space to talk, wait, and jump into the next room without losing your party.
               </p>
             </div>
 
             <div>
               <div class="top-chip-row">
                 <span id="stageCountBadge" class="top-chip">1 participant on screen</span>
-                <span class="top-chip">Separate party screen</span>
+                <span class="top-chip">Party view stays live</span>
               </div>
 
               <div class="lobby-actions">
@@ -1207,29 +1215,29 @@
                 <article class="meta-card">
                   <span class="meta-label">Party</span>
                   <strong id="partyCodeValue" class="meta-value">Not Joined</strong>
-                  <span class="meta-note">Your private crew code.</span>
+                  <span class="meta-note">The code your friends join.</span>
                 </article>
 
                 <article class="meta-card">
                   <span class="meta-label">Members</span>
                   <strong id="partyCountValue" class="meta-value">0 / 4</strong>
-                  <span class="meta-note">People in your party.</span>
+                  <span class="meta-note">Current people in your group.</span>
                 </article>
 
                 <article class="meta-card">
                   <span class="meta-label">State</span>
                   <strong id="queueStateValue" class="meta-value">Idle</strong>
-                  <span class="meta-note">Queue and room status.</span>
+                  <span class="meta-note">What your party is doing now.</span>
                 </article>
               </div>
 
               <div id="partyInfo" class="party-summary">
-                You are not in a party yet. Create one to invite your friends or join with a party code.
+                You are not in a party yet. Create one to invite friends or join with a party code.
               </div>
 
               <div class="metric-row">
-                <span class="footer-chip">Party-first voice and video</span>
-                <span class="footer-chip">Match only when ready</span>
+                <span class="footer-chip">Stay visible while waiting</span>
+                <span class="footer-chip">Match only when your host starts</span>
               </div>
             </aside>
 
@@ -1237,11 +1245,11 @@
               <div class="stage-head">
                 <div>
                   <p class="section-kicker">Live Stage</p>
-                  <h2 class="section-title">Party lobby video</h2>
-                  <p>Your local preview and your party stay visible here before, during, and after the matchmaking flow.</p>
+                  <h2 class="section-title">Video lobby</h2>
+                  <p>Your preview and party video stay here before, during, and after matching.</p>
                 </div>
 
-                <span class="stage-pill">Dedicated lobby view</span>
+                <span class="stage-pill">Live now</span>
               </div>
 
               <div id="videoGrid" data-count="1">
@@ -1260,9 +1268,9 @@
                       <div class="identity-stack">
                         <span class="identity-pill identity-pill--self">You</span>
                         <h3 id="localUserLabel" class="video-title">You</h3>
-                        <p class="video-subtitle">Local preview</p>
+                        <p class="video-subtitle">Your camera</p>
                       </div>
-                      <span class="video-chip">Camera preview</span>
+                      <span class="video-chip">Preview</span>
                     </div>
                   </div>
                 </article>
@@ -1279,9 +1287,9 @@
       <div class="modal-header">
         <div>
           <p class="mini-kicker">Upgrade Plans</p>
-          <h2 id="premiumModalTitle" class="section-title">Monetize bigger party sizes with Party Pro</h2>
+          <h2 id="premiumModalTitle" class="section-title">Preview Party Pro for bigger groups</h2>
           <p class="section-copy" style="margin-top: 8px;">
-            This is still a frontend upgrade flow. It is positioned like a real product purchase path, but the backend cap remains 4 until payments and entitlements are implemented server-side.
+            This keeps the free experience clean while showing how a brighter premium path could look later. The current live backend cap still remains 4 until server-side entitlements exist.
           </p>
         </div>
         <button id="closePremiumBtn" class="modal-close" type="button" aria-label="Close premium modal">×</button>
@@ -1297,9 +1305,9 @@
               <span>forever</span>
             </div>
             <ul class="pricing-list">
-              <li>Party codes and standard matching</li>
+              <li>Create a party and join by code</li>
               <li>Up to 4 members per party</li>
-              <li>Basic room styling</li>
+              <li>Standard matching and room styling</li>
             </ul>
           </section>
 
@@ -1311,18 +1319,18 @@
               <span>per host / month</span>
             </div>
             <ul class="pricing-list">
-              <li>Premium promise: up to 8 members per party</li>
-              <li>Priority matching and premium host badge</li>
-              <li>Branded live cards and stronger room presence</li>
+              <li>Preview messaging for larger parties</li>
+              <li>Priority matching and host styling</li>
+              <li>Brighter premium room presentation</li>
             </ul>
           </section>
         </div>
 
         <div class="modal-footer">
           <div class="modal-disclaimer">
-            Frontend upgrade messaging is live in this UI. Actual checkout, billing, and true bigger-party access still need backend implementation before public payments are turned on.
+            This is still a frontend-only preview. Checkout, billing, and true bigger-party access still need backend implementation before public payments are turned on.
           </div>
-          <button id="activatePremiumPreviewBtn" class="app-button app-button--premium" type="button">Activate premium preview</button>
+          <button id="activatePremiumPreviewBtn" class="app-button app-button--premium" type="button">Turn on Party Pro preview</button>
         </div>
       </div>
     </div>

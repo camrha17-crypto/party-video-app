@@ -87,19 +87,19 @@ function getQueueStateLabel() {
 
 function updatePremiumUI() {
   if (premiumPreviewActive) {
-    openPremiumBtn.textContent = "Party Pro preview active";
-    premiumCtaBtn.textContent = "Premium preview enabled";
-    activatePremiumPreviewBtn.textContent = "Premium preview enabled";
+    openPremiumBtn.textContent = "Party Pro preview is on";
+    premiumCtaBtn.textContent = "Party Pro preview enabled";
+    activatePremiumPreviewBtn.textContent = "Party Pro preview enabled";
     premiumNote.textContent =
-      "Party Pro preview is active in the UI. The product now surfaces an 8-person premium plan, but the current backend still enforces the live 4-member limit.";
+      "Party Pro preview is active in the UI. You can show a larger premium plan, but the current backend still enforces the live 4-member limit.";
     return;
   }
 
-  openPremiumBtn.textContent = "Upgrade for bigger parties";
-  premiumCtaBtn.textContent = "See upgrade plans";
-  activatePremiumPreviewBtn.textContent = "Activate premium preview";
+  openPremiumBtn.textContent = "Open Party Pro";
+  premiumCtaBtn.textContent = "See Party Pro";
+  activatePremiumPreviewBtn.textContent = "Turn on Party Pro preview";
   premiumNote.textContent =
-    "Premium is presented as a launch-ready frontend upsell. The current live backend limit in this build still remains 4 members per party.";
+    "Party Pro is still a frontend preview. The current live backend limit in this build still remains 4 members per party.";
 }
 
 function updatePartyInfo() {
@@ -110,7 +110,7 @@ function updatePartyInfo() {
     partyCountValue.textContent = "0 / 4";
     queueStateValue.textContent = "Idle";
     partyInfoEl.textContent =
-      "You are not in a party yet. Create one to invite your friends or join with a party code.";
+      "You are not in a party yet. Create one to invite friends or join with a party code.";
     return;
   }
 
@@ -122,10 +122,10 @@ function updatePartyInfo() {
   if (currentQueueState === "live") {
     partyInfoEl.textContent =
       `Party ${currentPartyCode} is live with ${currentPartyCount} member` +
-      `${currentPartyCount === 1 ? "" : "s"} on this side of the room.`;
+      `${currentPartyCount === 1 ? "" : "s"} in this room.`;
 
     if (premiumPreviewActive) {
-      partyInfoEl.textContent += " Party Pro preview is active for larger-group upsell messaging.";
+      partyInfoEl.textContent += " Party Pro preview is active in the interface.";
     }
 
     partyInfoEl.textContent += hostNote;
@@ -136,10 +136,10 @@ function updatePartyInfo() {
   if (currentQueueState === "queue" || currentQueueState === "connecting") {
     partyInfoEl.textContent =
       `Party ${currentPartyCode} has ${currentPartyCount} member` +
-      `${currentPartyCount === 1 ? "" : "s"} and is looking for the next match while staying connected together.`;
+      `${currentPartyCount === 1 ? "" : "s"} and is waiting for the next match together.`;
 
     if (currentPartyCount >= 4 && !premiumPreviewActive) {
-      partyInfoEl.textContent += " Need a bigger group? Open Party Pro for the 8-person upgrade pitch.";
+      partyInfoEl.textContent += " Need a bigger group later? Open Party Pro to preview the upgrade flow.";
     }
 
     partyInfoEl.textContent += hostNote;
@@ -149,7 +149,7 @@ function updatePartyInfo() {
 
   partyInfoEl.textContent =
     `Party ${currentPartyCode} is ready with ${currentPartyCount} member` +
-    `${currentPartyCount === 1 ? "" : "s"}. Start matching when your group is set.`;
+    `${currentPartyCount === 1 ? "" : "s"}. Start matching when your group is ready.`;
 
   if (currentPartyCount >= 4 && !premiumPreviewActive) {
     partyInfoEl.textContent += " Your party is at the free plan cap.";
@@ -237,7 +237,7 @@ function activatePremiumPreview() {
   premiumPreviewActive = true;
   updatePremiumUI();
   updatePartyInfo();
-  setStatus("Party Pro preview activated. Upgrade messaging is now visible across the UI.", "info");
+  setStatus("Party Pro preview is now visible across the app.", "info");
   closePremiumModal();
 }
 
@@ -296,7 +296,7 @@ function createRemoteVideoBox(participant) {
 
   const pill = document.createElement("span");
   pill.className = "identity-pill";
-  pill.textContent = premiumPreviewActive ? "Viewer" : "Guest";
+  pill.textContent = premiumPreviewActive ? "Viewer" : "Friend";
 
   const title = document.createElement("h3");
   title.className = "video-title";
@@ -304,7 +304,7 @@ function createRemoteVideoBox(participant) {
 
   const subtitle = document.createElement("p");
   subtitle.className = "video-subtitle";
-  subtitle.textContent = premiumPreviewActive ? "Remote participant in premium-ready room" : "Remote participant";
+  subtitle.textContent = premiumPreviewActive ? "Connected in Party Pro preview" : "Connected now";
 
   const chip = document.createElement("span");
   chip.className = "video-chip";
@@ -335,6 +335,20 @@ function removeRemoteVideoBox(participant) {
     card.remove();
     syncVideoGrid();
   }
+}
+
+async function publishLocalTracks(roomInstance) {
+  const stream = await startCamera();
+  const publishTasks = stream.getTracks().map((track) => {
+    const source =
+      track.kind === "video"
+        ? LivekitClient.Track.Source.Camera
+        : LivekitClient.Track.Source.Microphone;
+
+    return roomInstance.localParticipant.publishTrack(track, { source });
+  });
+
+  await Promise.all(publishTasks);
 }
 
 async function leaveCurrentRoomOnly() {
@@ -413,7 +427,7 @@ async function joinLiveKitRoom(roomName, roomMode = "match") {
   });
 
   await room.connect(data.livekitUrl, data.token);
-  await room.localParticipant.enableCameraAndMicrophone();
+  await publishLocalTracks(room);
 
   room.participants.forEach((participant) => {
     participant.tracks.forEach((publication) => {
@@ -439,18 +453,18 @@ async function joinLiveKitRoom(roomName, roomMode = "match") {
   if (roomMode === "match") {
     isWaitingForMatch = false;
     setQueueState("live");
-    setStatus("Connected to the match room.", "success");
+    setStatus("You are connected to the match.", "success");
     return room;
   }
 
   setQueueState(isWaitingForMatch ? "queue" : "party");
 
   if (isWaitingForMatch) {
-    setStatus("Waiting for another party while you stay with your crew.", "info");
+    setStatus("Waiting for another party while your group stays together.", "info");
   } else if (currentPartyCount > 1) {
     setStatus("Connected to your party lobby.", "success");
   } else {
-    setStatus("Party lobby ready. Share your code to bring friends in.", "success");
+    setStatus("Your party lobby is ready. Share your code to invite friends.", "success");
   }
 
   return room;
@@ -524,7 +538,7 @@ skipBtn.addEventListener("click", async () => {
   isWaitingForMatch = true;
   socket.emit("skip-match");
   setQueueState("queue");
-  setStatus("Skipping to the next party while staying with your crew...", "warning");
+  setStatus("Skipping to the next party while your group stays together.", "warning");
 });
 
 leaveRoomBtn.addEventListener("click", async () => {
@@ -591,7 +605,7 @@ socket.on("party-created", async ({ code, hostId }) => {
     setStatus("Party created. Share your code with friends.", "success");
   } catch (err) {
     console.error(err);
-    setStatus("Party created, but the party lobby could not start.", "danger");
+    setStatus("Party created, but the lobby could not start.", "danger");
   }
 
   alert(`Your party code is: ${code}`);
@@ -637,20 +651,20 @@ socket.on("join-error", ({ message }) => {
 socket.on("waiting", () => {
   isWaitingForMatch = true;
   setQueueState("queue");
-  setStatus("Waiting for another party while you stay with your crew...", "info");
+  setStatus("Waiting for another party while your group stays together.", "info");
 });
 
 socket.on("matched", async ({ roomName }) => {
   try {
     setQueueState("connecting");
-    setStatus("Matched! Joining room...", "success");
+    setStatus("Matched. Joining room...", "success");
     await joinLiveKitRoom(roomName);
   } catch (err) {
     console.error(err);
     isWaitingForMatch = false;
     isInRoom = false;
     setQueueState(currentPartyCode ? "party" : "idle");
-    setStatus("Could not join video room.", "danger");
+    setStatus(err?.message || "Could not join video room.", "danger");
   }
 });
 
