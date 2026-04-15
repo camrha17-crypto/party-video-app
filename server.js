@@ -16,13 +16,24 @@ app.get("/", (req, res) => {
   res.send("PartyLink server is running 🚀");
 });
 
+function readEnv(name) {
+  return String(process.env[name] || "").trim();
+}
+
 function getLiveKitConfig() {
-  const livekitUrl = process.env.LIVEKIT_URL;
-  const livekitApiKey = process.env.LIVEKIT_API_KEY;
-  const livekitApiSecret = process.env.LIVEKIT_API_SECRET;
+  const livekitUrl = readEnv("LIVEKIT_URL");
+  const livekitApiKey = readEnv("LIVEKIT_API_KEY");
+  const livekitApiSecret = readEnv("LIVEKIT_API_SECRET");
 
   if (!livekitUrl || !livekitApiKey || !livekitApiSecret) {
-    return { ok: false };
+    return {
+      ok: false,
+      missing: [
+        !livekitUrl && "LIVEKIT_URL",
+        !livekitApiKey && "LIVEKIT_API_KEY",
+        !livekitApiSecret && "LIVEKIT_API_SECRET"
+      ].filter(Boolean)
+    };
   }
 
   return {
@@ -127,6 +138,7 @@ app.post("/token", async (req, res) => {
 
     const liveKitConfig = getLiveKitConfig();
     if (!liveKitConfig.ok) {
+      console.error("LiveKit config missing in running process:", liveKitConfig.missing.join(", "));
       return res.status(500).json({ error: "LiveKit is not configured" });
     }
 
@@ -320,4 +332,9 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
+  console.log("LiveKit env present:", {
+    LIVEKIT_URL: Boolean(readEnv("LIVEKIT_URL")),
+    LIVEKIT_API_KEY: Boolean(readEnv("LIVEKIT_API_KEY")),
+    LIVEKIT_API_SECRET: Boolean(readEnv("LIVEKIT_API_SECRET"))
+  });
 });
